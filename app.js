@@ -2,25 +2,24 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var logger = require('morgan');
+var route = require('./routes/route');
 
 var app = express();
-
+// 第一个参数表示将使用html模板引擎文件的后缀名
+app.engine('html', require('express-art-template'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// render函数以art结束
+app.set('view engine', 'html');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(route);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
