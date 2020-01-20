@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 var route = require('./routes/route');
+var apis = require('./apis');
 
 var app = express();
 // 第一个参数表示将使用html模板引擎文件的后缀名
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api', apis);
 app.use(route);
 
 // catch 404 and forward to error handler
